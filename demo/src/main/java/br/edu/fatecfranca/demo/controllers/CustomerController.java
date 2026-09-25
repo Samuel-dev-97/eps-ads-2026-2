@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import br.edu.fatecfranca.demo.entities.Customer;
-import br.edu.fatecfranca.demo.repositories.CustomerRepository;
+
+import br.edu.fatecfranca.demo.services.CustomerService;
 
 
 @RestController
@@ -25,69 +26,140 @@ import br.edu.fatecfranca.demo.repositories.CustomerRepository;
 public class CustomerController {
 
 
- private final CustomerRepository repository;
+// private final CustomerRepository repository;
+//public CustomerController(CustomerRepository repository) {
+// this.repository = repository;
+//}
+private final CustomerService service;
 
 
- public CustomerController(CustomerRepository repository) {
-   this.repository = repository;
- }
+   public CustomerController(CustomerService service) {
+       this.service = service;
+   }
 
 
- @PostMapping
- public ResponseEntity<Customer> create(@RequestBody Customer customer) {
-   Customer savedCustomer = repository.save(customer);
+   // @PostMapping
+   // public ResponseEntity<Customer> create(@RequestBody Customer customer) {
+   //  Customer savedCustomer = repository.save(customer);
 
 
-   return ResponseEntity
-           .status(HttpStatus.CREATED)
-           .body(savedCustomer);
- }
+   //  return ResponseEntity
+   //          .status(HttpStatus.CREATED)
+   //          .body(savedCustomer);
+   // }
 
 
- @GetMapping
- public List<Customer> findAll() {
-   return repository.findAll();
- }
- @GetMapping("/{id}")
- public ResponseEntity<Customer> findById(@PathVariable Long id) {
+   @PostMapping
+   public ResponseEntity<Customer> create(@RequestBody Customer customer) {
 
 
-     return repository.findById(id)
-             .map(ResponseEntity::ok)
-             .orElse(ResponseEntity.notFound().build());
- }
- @PutMapping("/{id}")
- public ResponseEntity<Customer> update(
-         @PathVariable Long id,
-         @RequestBody Customer customer) {
+       Customer savedCustomer = service.create(customer);
 
 
-     if (!repository.existsById(id)) {
-         return ResponseEntity.notFound().build();
-     }
+       return ResponseEntity
+               .status(HttpStatus.CREATED)
+               .body(savedCustomer);
+   }
 
 
-     customer.setId(id);
+   // @GetMapping
+   // public List<Customer> findAll() {
+   //  return repository.findAll();
+   // }
 
 
-     return ResponseEntity.ok(repository.save(customer));
- }
+   @GetMapping
+   public List<Customer> findAll() {
+       return service.findAll();
+   }
 
 
- @DeleteMapping("/{id}")
- public ResponseEntity<Void> delete(@PathVariable Long id) {
+   // @GetMapping("/{id}")
+   // public ResponseEntity<Customer> findById(@PathVariable Long id) {
 
 
-     if (!repository.existsById(id)) {
-         return ResponseEntity.notFound().build();
-     }
+   //  return repository.findById(id)
+   //          .map(ResponseEntity::ok)
+   //          .orElse(ResponseEntity.notFound().build());
+   // }
 
 
-     repository.deleteById(id);
+   @GetMapping("/{id}")
+   public ResponseEntity<Customer> findById(@PathVariable Long id) {
 
 
-     return ResponseEntity.noContent().build();
- }
+       return service.findById(id)
+               .map(ResponseEntity::ok)
+               .orElse(ResponseEntity.notFound().build());
+   }
+
+
+   // @PutMapping("/{id}")
+   // public ResponseEntity<Customer> update(
+   //      @PathVariable Long id,
+   //      @RequestBody Customer customer) {
+
+
+   //  if (!repository.existsById(id)) {
+   //      return ResponseEntity.notFound().build();
+   //  }
+
+
+   //  customer.setId(id);
+
+
+   //  return ResponseEntity.ok(repository.save(customer));
+   // }
+
+
+   @PutMapping("/{id}")
+   public ResponseEntity<Customer> update(
+           @PathVariable Long id,
+           @RequestBody Customer customer) {
+
+
+       if (!service.existsById(id)) {
+           return ResponseEntity.notFound().build();
+       }
+
+
+       customer.setId(id);
+
+
+       return ResponseEntity.ok(service.update(customer));
+   }
+  
+   // @DeleteMapping("/{id}")
+   // public ResponseEntity<Void> delete(@PathVariable Long id) {
+
+
+   //  if (!repository.existsById(id)) {
+   //      return ResponseEntity.notFound().build();
+   //  }
+
+
+   //  repository.deleteById(id);
+
+
+   //  return ResponseEntity.noContent().build();
+   // }
+
+
+   @DeleteMapping("/{id}")
+   public ResponseEntity<Void> delete(@PathVariable Long id) {
+
+
+       if (!service.existsById(id)) {
+           return ResponseEntity.notFound().build();
+       }
+
+
+       service.deleteById(id);
+
+
+       return ResponseEntity.noContent().build();
+   }
 
 
 }
+
