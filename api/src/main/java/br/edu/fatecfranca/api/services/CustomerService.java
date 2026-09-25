@@ -1,4 +1,4 @@
-package br.edu.fatecfranca.demo.services;
+package br.edu.fatecfranca.api.services;
 
 
 import java.util.List;
@@ -8,8 +8,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 
-import br.edu.fatecfranca.demo.entities.Customer;
-import br.edu.fatecfranca.demo.repositories.CustomerRepository;
+import br.edu.fatecfranca.api.entities.Customer;
+import br.edu.fatecfranca.api.repositories.CustomerRepository;
 
 
 @Service

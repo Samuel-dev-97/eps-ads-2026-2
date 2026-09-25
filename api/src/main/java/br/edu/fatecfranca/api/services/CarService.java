@@ -1,5 +1,5 @@
 
-package br.edu.fatecfranca.demo.services;
+package br.edu.fatecfranca.api.services;
 
 
 import java.util.List;
@@ -9,8 +9,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 
-import br.edu.fatecfranca.demo.entities.Car;
-import br.edu.fatecfranca.demo.repositories.CarRepository;
+import br.edu.fatecfranca.api.entities.Car;
+import br.edu.fatecfranca.api.repositories.CarRepository;
 
 
 @Service

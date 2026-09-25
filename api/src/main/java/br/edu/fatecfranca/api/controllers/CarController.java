@@ -1,4 +1,4 @@
-package br.edu.fatecfranca.demo.controllers;
+package br.edu.fatecfranca.api.controllers;
 
 import java.util.List;
 
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.edu.fatecfranca.demo.entities.Car;
+import br.edu.fatecfranca.api.entities.Car;
 
-import br.edu.fatecfranca.demo.services.CarService;
+import br.edu.fatecfranca.api.services.CarService;
 
 
 

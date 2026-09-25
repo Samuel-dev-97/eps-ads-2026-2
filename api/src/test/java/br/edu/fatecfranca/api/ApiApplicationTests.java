@@ -1,10 +1,10 @@
-package br.edu.fatecfranca.demo;
+package br.edu.fatecfranca.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+class ApiApplicationTests {
 
 	@Test
 	void contextLoads() {

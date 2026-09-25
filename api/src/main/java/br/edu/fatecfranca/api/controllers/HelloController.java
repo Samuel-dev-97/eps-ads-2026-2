@@ -1,4 +1,4 @@
-package br.edu.fatecfranca.demo.controllers;
+package br.edu.fatecfranca.api.controllers;
 
 
 import org.springframework.web.bind.annotation.GetMapping;

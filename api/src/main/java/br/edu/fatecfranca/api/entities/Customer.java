@@ -1,4 +1,4 @@
-package br.edu.fatecfranca.demo.entities;
+package br.edu.fatecfranca.api.entities;
 
 
 import java.time.LocalDate;
