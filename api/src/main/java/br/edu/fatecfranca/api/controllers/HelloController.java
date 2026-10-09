@@ -13,7 +13,7 @@ public class HelloController {
    public String hello() {
        return "API em funcionamento!";
    }
-   @GetMapping("/users")
+   @GetMapping("/hello/users")
    public String listUsers(){
     return "Listando todos os usuários";
    }
