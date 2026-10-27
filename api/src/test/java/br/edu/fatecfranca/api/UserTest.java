@@ -3,17 +3,25 @@ package br.edu.fatecfranca.api;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import br.edu.fatecfranca.api.dtos.CarRequest;
 import br.edu.fatecfranca.api.dtos.CustomerRequest;
+import br.edu.fatecfranca.api.dtos.LoginRequest;
 import br.edu.fatecfranca.api.dtos.UserRequest;
 import br.edu.fatecfranca.api.entities.User;
+import br.edu.fatecfranca.api.repositories.UserRepository;
+import br.edu.fatecfranca.api.services.UserService;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -98,5 +106,26 @@ class UserTest {
         Set<ConstraintViolation<UserRequest>> violations = validator.validate(request);
 
         assertTrue(violations.stream().anyMatch(v -> v.getPropertyPath().toString().equals("fullname")));
+    }
+
+    @Test
+    void shouldAuthenticateUserByUsernameOrEmail() {
+        UserRepository repository = mock(UserRepository.class);
+        PasswordEncoder passwordEncoder = new Argon2PasswordEncoder(16, 32, 4, 65 * 1024, 3);
+        UserService service = new UserService(repository, passwordEncoder);
+
+        User user = new User();
+        user.setFullname("Maria das Couves");
+        user.setUsername("mcouves");
+        user.setEmail("mcouves@verdura.com.br");
+        user.setPassword(passwordEncoder.encode("Verdura@456"));
+        user.setIsAdmin(true);
+
+        when(repository.findByUsernameOrEmail("mcouves", "mcouves")).thenReturn(Optional.of(user));
+
+        Optional<User> authenticated = service.authenticate(new LoginRequest("mcouves", "Verdura@456"));
+
+        assertTrue(authenticated.isPresent());
+        assertEquals("mcouves", authenticated.get().getUsername());
     }
 }
