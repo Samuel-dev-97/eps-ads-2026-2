@@ -19,9 +19,9 @@ public class UserService {
    }
 
    private void copyToEntity(UserRequest request, User user) {
-      user.setFullname(request.fullname());
-      user.setUsername(request.username());
-      user.setEmail(request.email());
+      user.setFullname(request.fullname().trim());
+      user.setUsername(request.username().trim());
+      user.setEmail(request.email().trim());
       user.setPassword(request.password());
       user.setIsAdmin(request.isAdmin());
    }

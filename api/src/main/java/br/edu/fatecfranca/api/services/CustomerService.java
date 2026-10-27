@@ -24,17 +24,17 @@ public class CustomerService {
        Customer customer) {
 
 
-       customer.setName(request.name());
-       customer.setIdentDocument(request.identDocument());
+       customer.setName(request.name().trim());
+       customer.setIdentDocument(request.identDocument().trim());
        customer.setBirthDate(request.birthDate());
-       customer.setStreetName(request.streetName());
-       customer.setHouseNumber(request.houseNumber());
-       customer.setComplements(request.complements());
-       customer.setDistrict(request.district());
-       customer.setMunicipality(request.municipality());
-       customer.setState(request.state());
-       customer.setPhone(request.phone());
-       customer.setEmail(request.email());
+       customer.setStreetName(request.streetName().trim());
+       customer.setHouseNumber(request.houseNumber().trim());
+       customer.setComplements(request.complements() != null ? request.complements().trim() : null);
+       customer.setDistrict(request.district().trim());
+       customer.setMunicipality(request.municipality().trim());
+       customer.setState(request.state().trim().toUpperCase());
+       customer.setPhone(request.phone().trim());
+       customer.setEmail(request.email().trim());
    }  
 
    public CustomerService(CustomerRepository repository) {
